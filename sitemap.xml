@@ -576,6 +576,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://tasmota.github.io/docs/OpenHASP/</loc>
+         <lastmod>2022-04-06</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://tasmota.github.io/docs/OpenTherm/</loc>
          <lastmod>2022-04-06</lastmod>
          <changefreq>daily</changefreq>
