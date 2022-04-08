@@ -161,114 +161,112 @@
 <span class=w>  </span><span class=kt>ON</span><span class=w> </span><span class=kt>NeoPool</span><span class=o>#</span><span class=kt>Light</span><span class=o>==</span><span class=mi>0</span><span class=w> </span><span class=kt>DO</span><span class=w> </span><span class=kt>Power2</span><span class=w> </span><span class=o>%</span><span class=n>value</span><span class=o>%</span><span class=w> </span><span class=kt>ENDON</span><span class=w></span>
 <span class=w>  </span><span class=kt>ON</span><span class=w> </span><span class=kt>NeoPool</span><span class=o>#</span><span class=kt>Light</span><span class=o>==</span><span class=mi>1</span><span class=w> </span><span class=kt>DO</span><span class=w> </span><span class=kt>Power2</span><span class=w> </span><span class=o>%</span><span class=n>value</span><span class=o>%</span><span class=w> </span><span class=kt>ENDON</span><span class=w></span>
 </code></pre></div> <p>Don't wonder about the double trigger definition, which at first glance seem nonsensical - they are necessary so that the rule does not trigger endless.</p> <p>At least we activate the rule:</p> <div class=highlight><pre><span></span><code><span class=kt>Backlog</span><span class=w> </span><span class=kt>Rule1</span><span class=w> </span><span class=mi>5</span><span class=p>;</span><span class=kt>Rule1</span><span class=w> </span><span class=mi>1</span><span class=w></span>
-</code></pre></div> <p>It is important to enable the Rule ONCE (<code>Rule1 5</code>) function, which prevents the trigger is triggering themself in a loop.</p> <p>You can now control filtration and light using the WebGUI and get the current status of the device elements when they are switched by auto-mode or manually on the device directly.</p> <p><img alt src=../_media/xsns_83_neopool_do_ctrl.png></p> <p>Additional advantage is that you can also use Tasmota Timer switching Power1 (=filtration) and Power2 (light) for your needs.</p> <h3 id=esp32-adding-user-defined-neopool-commands-to-tasmota>ESP32: Adding user defined NeoPool commands to Tasmota<a class=headerlink href=#esp32-adding-user-defined-neopool-commands-to-tasmota title="Permanent link">~</a></h3> <p>The following enhancements are made using the <a href=../Berry/ >Berry Scripting Language</a> which is available on ESP32 only.</p> <p>The class <code>NeoPoolCommands</code> below adds two new commands to Tasmota:</p> <table> <thead> <tr> <th align=left>Command</th> <th align=left>Parameters</th> </tr> </thead> <tbody> <tr> <td align=left>NPBoost<a id=NPBoost></a></td> <td align=left><code>{&lt;state&gt;}</code><br>get/set boost mode (state = <code>0..2</code>). Get if state is omitted, otherwise set accordingly <code>&lt;state&gt;</code>:<ul><li><code>0</code> - disable boost mode</li><li><code>1</code> - enable boost mode (without redox control)</li><li><code>2</code> - enable boost mode (with redox control)</li></ul></td> </tr> <tr> <td align=left>NPAux&lt;x><a id=NPAux></a></td> <td align=left><code>{&lt;state&gt;}</code><br>get/set auxiliary relay &lt;x> (state = <code>0..2</code>). Get if state is omitted, otherwise set accordingly <code>&lt;state&gt;</code>:<ul><li><code>0</code> - switch off auxiliary relay</li><li><code>1</code> - switch on auxiliary relay</li></ul></td> </tr> </tbody> </table> <p>The class members <code>NPBoost</code> and <code>NPAux</code> can also be used as templates for further commands.</p> <p>Store the following code using the WebGUI "Console" / "Manage File system".</p> <p>ESP32 file <code>neopool.be</code>: <br> <div class=highlight><pre><span></span><code>class NeoPoolCommands
-  var TEXT_OFF
-  var TEXT_ON
+</code></pre></div> <p>It is important to enable the Rule ONCE (<code>Rule1 5</code>) function, which prevents the trigger is triggering themself in a loop.</p> <p>You can now control filtration and light using the WebGUI and get the current status of the device elements when they are switched by auto-mode or manually on the device directly.</p> <p><img alt src=../_media/xsns_83_neopool_do_ctrl.png></p> <p>Additional advantage is that you can also use Tasmota Timer switching Power1 (=filtration) and Power2 (light) for your needs.</p> <h3 id=esp32-adding-user-defined-neopool-commands-to-tasmota>ESP32: Adding user defined NeoPool commands to Tasmota<a class=headerlink href=#esp32-adding-user-defined-neopool-commands-to-tasmota title="Permanent link">~</a></h3> <p>The following enhancements are made using the <a href=../Berry/ >Berry Scripting Language</a> which is available on ESP32 only.</p> <p>The class <code>NeoPoolCommands</code> below adds two new commands to Tasmota:</p> <table> <thead> <tr> <th align=left>Command</th> <th align=left>Parameters</th> </tr> </thead> <tbody> <tr> <td align=left>NPBoost<a id=NPBoost></a></td> <td align=left><code>{&lt;state&gt;}</code><br>get/set boost mode (state = <code>0..2</code>). Get if state is omitted, otherwise set accordingly <code>&lt;state&gt;</code>:<ul><li><code>0</code> - disable boost mode</li><li><code>1</code> - enable boost mode (without redox control)</li><li><code>2</code> - enable boost mode (with redox control)</li></ul></td> </tr> <tr> <td align=left>NPAux&lt;x><a id=NPAux></a></td> <td align=left><code>{&lt;state&gt;}</code><br>get/set auxiliary relay &lt;x> (state = <code>0..2</code>). Get if state is omitted, otherwise set accordingly <code>&lt;state&gt;</code>:<ul><li><code>0</code> - switch off auxiliary relay</li><li><code>1</code> - switch on auxiliary relay</li></ul></td> </tr> </tbody> </table> <p>The class members <code>NPBoost</code> and <code>NPAux</code> can also be used as templates for further commands.</p> <p>Store the following code using the WebGUI "Console" / "Manage File system".</p> <p>ESP32 file <code>neopool.be</code>: <br> <div class=highlight><pre><span></span><code><span class=k>class</span> <span class=nc>NeoPoolCommands</span>
+  <span class=n>var</span> <span class=n>TEXT_OFF</span>
+  <span class=n>var</span> <span class=n>TEXT_ON</span>
 
-  # string helper
-  def ltrim(s)
-    import string
-    var i = 0 while(s[i]==&#39; &#39;) i += 1 end
-    return string.split(s, i)[1]
-  end
-  def rtrim(s)
-    import string
-    return string.split(s, &quot; &quot;)[0]
-  end
-  def trim(s)
-    return self.rtrim(self.ltrim(s));
-  end
+  <span class=c1># string helper</span>
+  <span class=k>def</span> <span class=nf>ltrim</span><span class=p>(</span><span class=n>s</span><span class=p>)</span>
+    <span class=kn>import</span> <span class=nn>string</span>
+    <span class=n>var</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>0</span> <span class=k>while</span><span class=p>(</span><span class=n>s</span><span class=p>[</span><span class=n>i</span><span class=p>]</span><span class=o>==</span><span class=s1>&#39; &#39;</span><span class=p>)</span> <span class=n>i</span> <span class=o>+=</span> <span class=mi>1</span> <span class=n>end</span>
+    <span class=k>return</span> <span class=n>string</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=n>s</span><span class=p>,</span> <span class=n>i</span><span class=p>)[</span><span class=mi>1</span><span class=p>]</span>
+  <span class=n>end</span>
+  <span class=k>def</span> <span class=nf>rtrim</span><span class=p>(</span><span class=n>s</span><span class=p>)</span>
+    <span class=kn>import</span> <span class=nn>string</span>
+    <span class=k>return</span> <span class=n>string</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=n>s</span><span class=p>,</span> <span class=s2>&quot; &quot;</span><span class=p>)[</span><span class=mi>0</span><span class=p>]</span>
+  <span class=n>end</span>
+  <span class=k>def</span> <span class=nf>trim</span><span class=p>(</span><span class=n>s</span><span class=p>)</span>
+    <span class=k>return</span> <span class=bp>self</span><span class=o>.</span><span class=n>rtrim</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>ltrim</span><span class=p>(</span><span class=n>s</span><span class=p>));</span>
+  <span class=n>end</span>
 
-  #- NPBoost OFF|0|ON|1|REDOX|2
-      0|OFF:   Switch boost off
-      1|ON:    Switch boost on without redox control
-      2|REDOX: Switch boost on with redox control
-  -#
-  def NPBoost(cmd, idx, payload)
-    import string
-    var ctrl, parm
-    try
-      parm = string.toupper(self.trim(payload))
-    except ..
-      parm = &quot;&quot;
-    end
-    if parm != &quot;&quot;
-      if string.find(parm, &#39;OFF&#39;)&gt;=0 || string.find(parm, self.TEXT_OFF)&gt;=0 || string.find(parm, &#39;0&#39;)&gt;=0
-        ctrl = 0
-      elif string.find(parm, &#39;ON&#39;)&gt;=0 || string.find(parm, self.TEXT_ON)&gt;=0 || string.find(parm, &#39;1&#39;)&gt;=0
-        ctrl = 0x85A0
-      elif string.find(parm, &#39;REDOX&#39;)&gt;=0 || string.find(parm, &#39;2&#39;)&gt;=0
-        ctrl = 0x05A0
-      else
-        tasmota.resp_cmnd_error()
-        return
-      end
-      tasmota.cmd(string.format(&quot;Backlog NPWrite 0x020C,0x%04X;NPSave;NPExec;NPWrite 0x0110,0x7F&quot;, ctrl))
-    else
-      try
-        ctrl = compile(&quot;return &quot;+str(tasmota.cmd(&quot;NPRead 0x020C&quot;)[&#39;NPRead&#39;][&#39;Data&#39;]))()
-      except ..
-        tasmota.resp_cmnd_error()
-        return
-      end
-    end
-    tasmota.resp_cmnd(string.format(&#39;{&quot;NPBoost&quot;:&quot;%s&quot;}&#39;, ctrl == 0 ? self.TEXT_OFF : (ctrl &amp; 0x8500) == 0x8500 ? self.TEXT_ON : &quot;REDOX&quot;))
-  end
+  <span class=c1># NPBoost OFF|0|ON|1|REDOX|2</span>
+  <span class=c1>#    0|OFF:   Switch boost off</span>
+  <span class=c1>#    1|ON:    Switch boost on without redox control</span>
+  <span class=c1>#    2|REDOX: Switch boost on with redox control</span>
+  <span class=k>def</span> <span class=nf>NPBoost</span><span class=p>(</span><span class=n>cmd</span><span class=p>,</span> <span class=n>idx</span><span class=p>,</span> <span class=n>payload</span><span class=p>)</span>
+    <span class=kn>import</span> <span class=nn>string</span>
+    <span class=n>var</span> <span class=n>ctrl</span><span class=p>,</span> <span class=n>parm</span>
+    <span class=k>try</span>
+      <span class=n>parm</span> <span class=o>=</span> <span class=n>string</span><span class=o>.</span><span class=n>toupper</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>trim</span><span class=p>(</span><span class=n>payload</span><span class=p>))</span>
+    <span class=k>except</span> <span class=o>..</span>
+      <span class=n>parm</span> <span class=o>=</span> <span class=s2>&quot;&quot;</span>
+    <span class=n>end</span>
+    <span class=k>if</span> <span class=n>parm</span> <span class=o>!=</span> <span class=s2>&quot;&quot;</span>
+      <span class=k>if</span> <span class=n>string</span><span class=o>.</span><span class=n>find</span><span class=p>(</span><span class=n>parm</span><span class=p>,</span> <span class=s1>&#39;OFF&#39;</span><span class=p>)</span><span class=o>&gt;=</span><span class=mi>0</span> <span class=o>||</span> <span class=n>string</span><span class=o>.</span><span class=n>find</span><span class=p>(</span><span class=n>parm</span><span class=p>,</span> <span class=bp>self</span><span class=o>.</span><span class=n>TEXT_OFF</span><span class=p>)</span><span class=o>&gt;=</span><span class=mi>0</span> <span class=o>||</span> <span class=n>string</span><span class=o>.</span><span class=n>find</span><span class=p>(</span><span class=n>parm</span><span class=p>,</span> <span class=s1>&#39;0&#39;</span><span class=p>)</span><span class=o>&gt;=</span><span class=mi>0</span>
+        <span class=n>ctrl</span> <span class=o>=</span> <span class=mi>0</span>
+      <span class=k>elif</span> <span class=n>string</span><span class=o>.</span><span class=n>find</span><span class=p>(</span><span class=n>parm</span><span class=p>,</span> <span class=s1>&#39;ON&#39;</span><span class=p>)</span><span class=o>&gt;=</span><span class=mi>0</span> <span class=o>||</span> <span class=n>string</span><span class=o>.</span><span class=n>find</span><span class=p>(</span><span class=n>parm</span><span class=p>,</span> <span class=bp>self</span><span class=o>.</span><span class=n>TEXT_ON</span><span class=p>)</span><span class=o>&gt;=</span><span class=mi>0</span> <span class=o>||</span> <span class=n>string</span><span class=o>.</span><span class=n>find</span><span class=p>(</span><span class=n>parm</span><span class=p>,</span> <span class=s1>&#39;1&#39;</span><span class=p>)</span><span class=o>&gt;=</span><span class=mi>0</span>
+        <span class=n>ctrl</span> <span class=o>=</span> <span class=mh>0x85A0</span>
+      <span class=k>elif</span> <span class=n>string</span><span class=o>.</span><span class=n>find</span><span class=p>(</span><span class=n>parm</span><span class=p>,</span> <span class=s1>&#39;REDOX&#39;</span><span class=p>)</span><span class=o>&gt;=</span><span class=mi>0</span> <span class=o>||</span> <span class=n>string</span><span class=o>.</span><span class=n>find</span><span class=p>(</span><span class=n>parm</span><span class=p>,</span> <span class=s1>&#39;2&#39;</span><span class=p>)</span><span class=o>&gt;=</span><span class=mi>0</span>
+        <span class=n>ctrl</span> <span class=o>=</span> <span class=mh>0x05A0</span>
+      <span class=k>else</span>
+        <span class=n>tasmota</span><span class=o>.</span><span class=n>resp_cmnd_error</span><span class=p>()</span>
+        <span class=k>return</span>
+      <span class=n>end</span>
+      <span class=n>tasmota</span><span class=o>.</span><span class=n>cmd</span><span class=p>(</span><span class=n>string</span><span class=o>.</span><span class=n>format</span><span class=p>(</span><span class=s2>&quot;Backlog NPWrite 0x020C,0x</span><span class=si>%04X</span><span class=s2>;NPSave;NPExec;NPWrite 0x0110,0x7F&quot;</span><span class=p>,</span> <span class=n>ctrl</span><span class=p>))</span>
+    <span class=k>else</span>
+      <span class=k>try</span>
+        <span class=n>ctrl</span> <span class=o>=</span> <span class=nb>compile</span><span class=p>(</span><span class=s2>&quot;return &quot;</span><span class=o>+</span><span class=nb>str</span><span class=p>(</span><span class=n>tasmota</span><span class=o>.</span><span class=n>cmd</span><span class=p>(</span><span class=s2>&quot;NPRead 0x020C&quot;</span><span class=p>)[</span><span class=s1>&#39;NPRead&#39;</span><span class=p>][</span><span class=s1>&#39;Data&#39;</span><span class=p>]))()</span>
+      <span class=k>except</span> <span class=o>..</span>
+        <span class=n>tasmota</span><span class=o>.</span><span class=n>resp_cmnd_error</span><span class=p>()</span>
+        <span class=k>return</span>
+      <span class=n>end</span>
+    <span class=n>end</span>
+    <span class=n>tasmota</span><span class=o>.</span><span class=n>resp_cmnd</span><span class=p>(</span><span class=n>string</span><span class=o>.</span><span class=n>format</span><span class=p>(</span><span class=s1>&#39;{&quot;NPBoost&quot;:&quot;</span><span class=si>%s</span><span class=s1>&quot;}&#39;</span><span class=p>,</span> <span class=n>ctrl</span> <span class=o>==</span> <span class=mi>0</span> <span class=err>?</span> <span class=bp>self</span><span class=o>.</span><span class=n>TEXT_OFF</span> <span class=p>:</span> <span class=p>(</span><span class=n>ctrl</span> <span class=o>&amp;</span> <span class=mh>0x8500</span><span class=p>)</span> <span class=o>==</span> <span class=mh>0x8500</span> <span class=err>?</span> <span class=bp>self</span><span class=o>.</span><span class=n>TEXT_ON</span> <span class=p>:</span> <span class=s2>&quot;REDOX&quot;</span><span class=p>))</span>
+  <span class=n>end</span>
 
-  #- NPAux&lt;x&gt; OFF|0|ON|1 (&lt;x&gt; = 1..4)
-      0|OFF:   Switch aux x off
-      1|ON:    Switch aux x on
-  -#
-  def NPAux(cmd, idx, payload)
-    import string
-    var ctrl, parm
+  <span class=c1># NPAux&lt;x&gt; OFF|0|ON|1 (&lt;x&gt; = 1..4)</span>
+  <span class=c1>#    0|OFF:   Switch aux x off</span>
+  <span class=c1>#    1|ON:    Switch aux x on</span>
+  <span class=k>def</span> <span class=nf>NPAux</span><span class=p>(</span><span class=n>cmd</span><span class=p>,</span> <span class=n>idx</span><span class=p>,</span> <span class=n>payload</span><span class=p>)</span>
+    <span class=kn>import</span> <span class=nn>string</span>
+    <span class=n>var</span> <span class=n>ctrl</span><span class=p>,</span> <span class=n>parm</span>
 
-    if idx &lt; 1 || idx &gt; 4
-      tasmota.resp_cmnd_error()
-      return
-    end
+    <span class=k>if</span> <span class=n>idx</span> <span class=o>&lt;</span> <span class=mi>1</span> <span class=o>||</span> <span class=n>idx</span> <span class=o>&gt;</span> <span class=mi>4</span>
+      <span class=n>tasmota</span><span class=o>.</span><span class=n>resp_cmnd_error</span><span class=p>()</span>
+      <span class=k>return</span>
+    <span class=n>end</span>
 
-    try
-      parm = string.toupper(self.trim(payload))
-    except ..
-      parm = &quot;&quot;
-    end
-    if parm != &quot;&quot;
-      if string.find(parm, &#39;OFF&#39;)&gt;=0 || string.find(parm, self.TEXT_OFF)&gt;=0 || string.find(parm, &#39;0&#39;)&gt;=0
-        ctrl = 4
-      elif string.find(parm, &#39;ON&#39;)&gt;=0 || string.find(parm, self.TEXT_ON)&gt;=0 || string.find(parm, &#39;1&#39;)&gt;=0
-        ctrl = 3
-      else
-        tasmota.resp_cmnd_error()
-        return
-      end
-      tasmota.cmd(string.format(&quot;Backlog NPWrite 0x%04X,%d;NPExec&quot;, [0x04AC, 0x04BB, 0x04CA, 0x04D9][idx-1], ctrl))
-    else
-      try
-        ctrl = (compile(&quot;return &quot;+str(tasmota.cmd(&quot;NPRead 0x010E&quot;)[&#39;NPRead&#39;][&#39;Data&#39;]))() &gt;&gt; (idx+2)) &amp; 1
-      except ..
-        tasmota.resp_cmnd_error()
-        return
-      end
-    end
-    tasmota.resp_cmnd(string.format(&#39;{&quot;NPAux%d&quot;:&quot;%s&quot;}&#39;, idx, ctrl == (parm != &quot;&quot; ? 4 : 0) ? self.TEXT_OFF : self.TEXT_ON))
-  end
+    <span class=k>try</span>
+      <span class=n>parm</span> <span class=o>=</span> <span class=n>string</span><span class=o>.</span><span class=n>toupper</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>trim</span><span class=p>(</span><span class=n>payload</span><span class=p>))</span>
+    <span class=k>except</span> <span class=o>..</span>
+      <span class=n>parm</span> <span class=o>=</span> <span class=s2>&quot;&quot;</span>
+    <span class=n>end</span>
+    <span class=k>if</span> <span class=n>parm</span> <span class=o>!=</span> <span class=s2>&quot;&quot;</span>
+      <span class=k>if</span> <span class=n>string</span><span class=o>.</span><span class=n>find</span><span class=p>(</span><span class=n>parm</span><span class=p>,</span> <span class=s1>&#39;OFF&#39;</span><span class=p>)</span><span class=o>&gt;=</span><span class=mi>0</span> <span class=o>||</span> <span class=n>string</span><span class=o>.</span><span class=n>find</span><span class=p>(</span><span class=n>parm</span><span class=p>,</span> <span class=bp>self</span><span class=o>.</span><span class=n>TEXT_OFF</span><span class=p>)</span><span class=o>&gt;=</span><span class=mi>0</span> <span class=o>||</span> <span class=n>string</span><span class=o>.</span><span class=n>find</span><span class=p>(</span><span class=n>parm</span><span class=p>,</span> <span class=s1>&#39;0&#39;</span><span class=p>)</span><span class=o>&gt;=</span><span class=mi>0</span>
+        <span class=n>ctrl</span> <span class=o>=</span> <span class=mi>4</span>
+      <span class=k>elif</span> <span class=n>string</span><span class=o>.</span><span class=n>find</span><span class=p>(</span><span class=n>parm</span><span class=p>,</span> <span class=s1>&#39;ON&#39;</span><span class=p>)</span><span class=o>&gt;=</span><span class=mi>0</span> <span class=o>||</span> <span class=n>string</span><span class=o>.</span><span class=n>find</span><span class=p>(</span><span class=n>parm</span><span class=p>,</span> <span class=bp>self</span><span class=o>.</span><span class=n>TEXT_ON</span><span class=p>)</span><span class=o>&gt;=</span><span class=mi>0</span> <span class=o>||</span> <span class=n>string</span><span class=o>.</span><span class=n>find</span><span class=p>(</span><span class=n>parm</span><span class=p>,</span> <span class=s1>&#39;1&#39;</span><span class=p>)</span><span class=o>&gt;=</span><span class=mi>0</span>
+        <span class=n>ctrl</span> <span class=o>=</span> <span class=mi>3</span>
+      <span class=k>else</span>
+        <span class=n>tasmota</span><span class=o>.</span><span class=n>resp_cmnd_error</span><span class=p>()</span>
+        <span class=k>return</span>
+      <span class=n>end</span>
+      <span class=n>tasmota</span><span class=o>.</span><span class=n>cmd</span><span class=p>(</span><span class=n>string</span><span class=o>.</span><span class=n>format</span><span class=p>(</span><span class=s2>&quot;Backlog NPWrite 0x</span><span class=si>%04X</span><span class=s2>,</span><span class=si>%d</span><span class=s2>;NPExec&quot;</span><span class=p>,</span> <span class=p>[</span><span class=mh>0x04AC</span><span class=p>,</span> <span class=mh>0x04BB</span><span class=p>,</span> <span class=mh>0x04CA</span><span class=p>,</span> <span class=mh>0x04D9</span><span class=p>][</span><span class=n>idx</span><span class=o>-</span><span class=mi>1</span><span class=p>],</span> <span class=n>ctrl</span><span class=p>))</span>
+    <span class=k>else</span>
+      <span class=k>try</span>
+        <span class=n>ctrl</span> <span class=o>=</span> <span class=p>(</span><span class=nb>compile</span><span class=p>(</span><span class=s2>&quot;return &quot;</span><span class=o>+</span><span class=nb>str</span><span class=p>(</span><span class=n>tasmota</span><span class=o>.</span><span class=n>cmd</span><span class=p>(</span><span class=s2>&quot;NPRead 0x010E&quot;</span><span class=p>)[</span><span class=s1>&#39;NPRead&#39;</span><span class=p>][</span><span class=s1>&#39;Data&#39;</span><span class=p>]))()</span> <span class=o>&gt;&gt;</span> <span class=p>(</span><span class=n>idx</span><span class=o>+</span><span class=mi>2</span><span class=p>))</span> <span class=o>&amp;</span> <span class=mi>1</span>
+      <span class=k>except</span> <span class=o>..</span>
+        <span class=n>tasmota</span><span class=o>.</span><span class=n>resp_cmnd_error</span><span class=p>()</span>
+        <span class=k>return</span>
+      <span class=n>end</span>
+    <span class=n>end</span>
+    <span class=n>tasmota</span><span class=o>.</span><span class=n>resp_cmnd</span><span class=p>(</span><span class=n>string</span><span class=o>.</span><span class=n>format</span><span class=p>(</span><span class=s1>&#39;{&quot;NPAux</span><span class=si>%d</span><span class=s1>&quot;:&quot;</span><span class=si>%s</span><span class=s1>&quot;}&#39;</span><span class=p>,</span> <span class=n>idx</span><span class=p>,</span> <span class=n>ctrl</span> <span class=o>==</span> <span class=p>(</span><span class=n>parm</span> <span class=o>!=</span> <span class=s2>&quot;&quot;</span> <span class=err>?</span> <span class=mi>4</span> <span class=p>:</span> <span class=mi>0</span><span class=p>)</span> <span class=err>?</span> <span class=bp>self</span><span class=o>.</span><span class=n>TEXT_OFF</span> <span class=p>:</span> <span class=bp>self</span><span class=o>.</span><span class=n>TEXT_ON</span><span class=p>))</span>
+  <span class=n>end</span>
 
-  def init()
-    self.TEXT_OFF = tasmota.cmd(&quot;StateText1&quot;)[&#39;StateText1&#39;]
-    self.TEXT_ON = tasmota.cmd(&quot;StateText2&quot;)[&#39;StateText2&#39;]
-    # Add commands
-    tasmota.add_cmd(&#39;NPBoost&#39;, / cmd, idx, payload -&gt; self.NPBoost(cmd, idx, payload))
-    tasmota.add_cmd(&#39;NPAux&#39;, / cmd, idx, payload -&gt; self.NPAux(cmd, idx, payload))
-  end
+  <span class=k>def</span> <span class=nf>init</span><span class=p>()</span>
+    <span class=bp>self</span><span class=o>.</span><span class=n>TEXT_OFF</span> <span class=o>=</span> <span class=n>tasmota</span><span class=o>.</span><span class=n>cmd</span><span class=p>(</span><span class=s2>&quot;StateText1&quot;</span><span class=p>)[</span><span class=s1>&#39;StateText1&#39;</span><span class=p>]</span>
+    <span class=bp>self</span><span class=o>.</span><span class=n>TEXT_ON</span> <span class=o>=</span> <span class=n>tasmota</span><span class=o>.</span><span class=n>cmd</span><span class=p>(</span><span class=s2>&quot;StateText2&quot;</span><span class=p>)[</span><span class=s1>&#39;StateText2&#39;</span><span class=p>]</span>
+    <span class=c1># Add commands</span>
+    <span class=n>tasmota</span><span class=o>.</span><span class=n>add_cmd</span><span class=p>(</span><span class=s1>&#39;NPBoost&#39;</span><span class=p>,</span> <span class=o>/</span> <span class=n>cmd</span><span class=p>,</span> <span class=n>idx</span><span class=p>,</span> <span class=n>payload</span> <span class=o>-&gt;</span> <span class=bp>self</span><span class=o>.</span><span class=n>NPBoost</span><span class=p>(</span><span class=n>cmd</span><span class=p>,</span> <span class=n>idx</span><span class=p>,</span> <span class=n>payload</span><span class=p>))</span>
+    <span class=n>tasmota</span><span class=o>.</span><span class=n>add_cmd</span><span class=p>(</span><span class=s1>&#39;NPAux&#39;</span><span class=p>,</span> <span class=o>/</span> <span class=n>cmd</span><span class=p>,</span> <span class=n>idx</span><span class=p>,</span> <span class=n>payload</span> <span class=o>-&gt;</span> <span class=bp>self</span><span class=o>.</span><span class=n>NPAux</span><span class=p>(</span><span class=n>cmd</span><span class=p>,</span> <span class=n>idx</span><span class=p>,</span> <span class=n>payload</span><span class=p>))</span>
+  <span class=n>end</span>
 
-  def deinit()
-    tasmota.remove_cmd(&#39;NPBoost&#39;)
-    tasmota.remove_cmd(&#39;NPAux&#39;)
-  end
-end
+  <span class=k>def</span> <span class=nf>deinit</span><span class=p>()</span>
+    <span class=n>tasmota</span><span class=o>.</span><span class=n>remove_cmd</span><span class=p>(</span><span class=s1>&#39;NPBoost&#39;</span><span class=p>)</span>
+    <span class=n>tasmota</span><span class=o>.</span><span class=n>remove_cmd</span><span class=p>(</span><span class=s1>&#39;NPAux&#39;</span><span class=p>)</span>
+  <span class=n>end</span>
+<span class=n>end</span>
 
-neopool_commands = NeoPoolCommands()
+<span class=n>neopool_commands</span> <span class=o>=</span> <span class=n>NeoPoolCommands</span><span class=p>()</span>
 </code></pre></div></p> <p>To activate the new commands go to WebGUI "Consoles" / "Berry Scripting console" and execute</p> <div class=highlight><pre><span></span><code><span class=n>load</span><span class=p>(</span><span class=s2>&quot;neopool.be&quot;</span><span class=p>)</span>
-</code></pre></div> <p>If you want get the new commands available after a restart of your ESP32, store the load command into the special file <code>autoexec.be</code>:</p> <p>ESP32 file <code>autoexec.be</code>: <br> <div class=highlight><pre><span></span><code>load(&quot;neopool.be&quot;)
+</code></pre></div> <p>If you want get the new commands available after a restart of your ESP32, store the load command into the special file <code>autoexec.be</code>:</p> <p>ESP32 file <code>autoexec.be</code>: <br> <div class=highlight><pre><span></span><code><span class=n>load</span><span class=p>(</span><span class=s2>&quot;neopool.be&quot;</span><span class=p>)</span>
 </code></pre></div></p> </article> </div> </div> <a href=# class="md-top md-icon" data-md-component=top data-md-state=hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg> Back to top </a> </main> <footer class=md-footer> <div class="md-footer-meta md-typeset"> <div class="md-footer-meta__inner md-grid"> <div class=md-copyright> Made with <a href=https://squidfunk.github.io/mkdocs-material/ target=_blank rel=noopener> Material for MkDocs </a> </div> <div class=md-social> <a href=https://discord.gg/Ks2Kzd4 target=_blank rel=noopener title=discord.gg class=md-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 640 512"><!-- Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M524.531 69.836a1.5 1.5 0 0 0-.764-.7A485.065 485.065 0 0 0 404.081 32.03a1.816 1.816 0 0 0-1.923.91 337.461 337.461 0 0 0-14.9 30.6 447.848 447.848 0 0 0-134.426 0 309.541 309.541 0 0 0-15.135-30.6 1.89 1.89 0 0 0-1.924-.91 483.689 483.689 0 0 0-119.688 37.107 1.712 1.712 0 0 0-.788.676C39.068 183.651 18.186 294.69 28.43 404.354a2.016 2.016 0 0 0 .765 1.375 487.666 487.666 0 0 0 146.825 74.189 1.9 1.9 0 0 0 2.063-.676A348.2 348.2 0 0 0 208.12 430.4a1.86 1.86 0 0 0-1.019-2.588 321.173 321.173 0 0 1-45.868-21.853 1.885 1.885 0 0 1-.185-3.126 251.047 251.047 0 0 0 9.109-7.137 1.819 1.819 0 0 1 1.9-.256c96.229 43.917 200.41 43.917 295.5 0a1.812 1.812 0 0 1 1.924.233 234.533 234.533 0 0 0 9.132 7.16 1.884 1.884 0 0 1-.162 3.126 301.407 301.407 0 0 1-45.89 21.83 1.875 1.875 0 0 0-1 2.611 391.055 391.055 0 0 0 30.014 48.815 1.864 1.864 0 0 0 2.063.7A486.048 486.048 0 0 0 610.7 405.729a1.882 1.882 0 0 0 .765-1.352c12.264-126.783-20.532-236.912-86.934-334.541zM222.491 337.58c-28.972 0-52.844-26.587-52.844-59.239s23.409-59.241 52.844-59.241c29.665 0 53.306 26.82 52.843 59.239 0 32.654-23.41 59.241-52.843 59.241zm195.38 0c-28.971 0-52.843-26.587-52.843-59.239s23.409-59.241 52.843-59.241c29.667 0 53.307 26.82 52.844 59.239 0 32.654-23.177 59.241-52.844 59.241z"/></svg> </a> <a href=https://t.me/tasmota target=_blank rel=noopener title=t.me class=md-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 496 512"><!-- Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M248 8C111.033 8 0 119.033 0 256s111.033 248 248 248 248-111.033 248-248S384.967 8 248 8zm114.952 168.66c-3.732 39.215-19.881 134.378-28.1 178.3-3.476 18.584-10.322 24.816-16.948 25.425-14.4 1.326-25.338-9.517-39.287-18.661-21.827-14.308-34.158-23.215-55.346-37.177-24.485-16.135-8.612-25 5.342-39.5 3.652-3.793 67.107-61.51 68.335-66.746.153-.655.3-3.1-1.154-4.384s-3.59-.849-5.135-.5q-3.283.746-104.608 69.142-14.845 10.194-26.894 9.934c-8.855-.191-25.888-5.006-38.551-9.123-15.531-5.048-27.875-7.717-26.8-16.291q.84-6.7 18.45-13.7 108.446-47.248 144.628-62.3c68.872-28.647 83.183-33.623 92.511-33.789 2.052-.034 6.639.474 9.61 2.885a10.452 10.452 0 0 1 3.53 6.716 43.765 43.765 0 0 1 .417 9.769z"/></svg> </a> <a href=https://github.com/tasmota target=_blank rel=noopener title=github.com class=md-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 480 512"><!-- Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg> </a> </div> </div> </div> </footer> </div> <div class=md-dialog data-md-component=dialog> <div class="md-dialog__inner md-typeset"></div> </div> <script id=__config type=application/json>{"base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.instant", "navigation.top", "navigation.tracking"], "search": "../assets/javascripts/workers/search.5e67fbfe.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script> <script src=../assets/javascripts/bundle.c44cc438.min.js></script> </body> </html>
