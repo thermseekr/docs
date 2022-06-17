@@ -741,6 +741,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://tasmota.github.io/docs/Safeboot/</loc>
+         <lastmod>2022-06-17</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://tasmota.github.io/docs/Scripting-Cookbook/</loc>
          <lastmod>2022-06-17</lastmod>
          <changefreq>daily</changefreq>
