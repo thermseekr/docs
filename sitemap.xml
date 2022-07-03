@@ -966,6 +966,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://tasmota.github.io/docs/ULP/</loc>
+         <lastmod>2022-07-03</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://tasmota.github.io/docs/Upgrade/</loc>
          <lastmod>2022-07-03</lastmod>
          <changefreq>daily</changefreq>
