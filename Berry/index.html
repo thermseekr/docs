@@ -54,9 +54,9 @@ The light is bright
 </code></pre></div> <p>Or if the same function is used to process similar triggers: <div class=highlight><pre><span></span><code><span class=kn>import</span> <span class=nn>string</span>
 
 <span class=k>def</span> <span class=nf>rule_adc</span><span class=p>(</span><span class=n>value</span><span class=p>,</span> <span class=n>trigger</span><span class=p>)</span>
-  <span class=n>i</span><span class=o>=</span><span class=n>string</span><span class=o>.</span><span class=n>find</span><span class=p>(</span><span class=n>trigger</span><span class=p>,</span><span class=s2>&quot;#A&quot;</span><span class=p>)</span>
-  <span class=n>tr</span><span class=o>=</span><span class=n>string</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=n>trigger</span><span class=p>,</span><span class=n>i</span><span class=o>+</span><span class=mi>2</span><span class=p>)</span>
-  <span class=n>adc</span><span class=o>=</span><span class=n>number</span><span class=p>(</span><span class=n>tr</span><span class=p>[</span><span class=mi>1</span><span class=p>])</span>
+  <span class=n>var</span> <span class=n>i</span><span class=o>=</span><span class=n>string</span><span class=o>.</span><span class=n>find</span><span class=p>(</span><span class=n>trigger</span><span class=p>,</span><span class=s2>&quot;#A&quot;</span><span class=p>)</span>
+  <span class=n>var</span> <span class=n>tr</span><span class=o>=</span><span class=n>string</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=n>trigger</span><span class=p>,</span><span class=n>i</span><span class=o>+</span><span class=mi>2</span><span class=p>)</span>
+  <span class=n>var</span> <span class=n>adc</span><span class=o>=</span><span class=n>number</span><span class=p>(</span><span class=n>tr</span><span class=p>[</span><span class=mi>1</span><span class=p>])</span>
   <span class=nb>print</span><span class=p>(</span><span class=s2>&quot;value of adc&quot;</span><span class=p>,</span><span class=n>adc</span><span class=p>,</span><span class=s2>&quot; is &quot;</span><span class=p>,</span><span class=n>value</span><span class=p>)</span>
 <span class=n>end</span>
 
