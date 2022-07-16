@@ -1419,26 +1419,21 @@ wcs  {s}Ch %0cnt%: %is1[cnt]%{m}%mux[cnt]% %%{e}
 next
 endif
 
+#rsub
+rap ,&quot;CD4067&quot;:{
+for cnt 1 16 1
+rap &quot;%is1[cnt]%&quot;:%mux[cnt]%
+if cnt&lt;16
+then
+rap ,
+endif
+next
+rap }
+
 &gt;J
 ; send to mqtt
-,&quot;CD4067&quot;:{
-&quot;%is1[1]%&quot;:%mux[1]%,
-&quot;%is1[2]%&quot;:%mux[2]%,
-&quot;%is1[3]%&quot;:%mux[3]%,
-&quot;%is1[4]%&quot;:%mux[4]%,
-&quot;%is1[5]%&quot;:%mux[5]%,
-&quot;%is1[6]%&quot;:%mux[6]%,
-&quot;%is1[7]%&quot;:%mux[7]%,
-&quot;%is1[8]%&quot;:%mux[8]%,
-&quot;%is1[9]%&quot;:%mux[9]%,
-&quot;%is1[10]%&quot;:%mux[10]%,
-&quot;%is1[11]%&quot;:%mux[11]%,
-&quot;%is1[12]%&quot;:%mux[12]%,
-&quot;%is1[13]%&quot;:%mux[13]%,
-&quot;%is1[14]%&quot;:%mux[14]%,
-&quot;%is1[15]%&quot;:%mux[15]%,
-&quot;%is1[16]%&quot;:%mux[16]%
-}
+; call json subroutine
+%=#rsub
 
 &gt;W
 ; call web subroutine
